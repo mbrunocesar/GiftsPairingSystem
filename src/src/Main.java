@@ -36,42 +36,94 @@ public class Main {
 
     public Main(String[] items, String season) {
         System.out.println("Season: " + season);
+
+        List<Gift> result = checkPairings(items, season);
+    }
+
+    public List<Gift> checkPairings(String[] items, String season) {
+        List<Gift> result;
         Gift[] gifts = formatIntoGiftArray(items);
 
         if (season.equals("Spring")) {
+            List<Gift> perfectVariety = checkForPerfectVariety(gifts);
+            if (!perfectVariety.isEmpty()) {
+                return perfectVariety;
+            }
+
+            List<Gift> shapeVariety = checkForShapeVariety(gifts);
+            if (!shapeVariety.isEmpty()) {
+                return shapeVariety;
+            }
+
+            List<Gift> discountBasket = Arrays.stream(gifts).toList();
+            return discountBasket;
 
         } else if (season.equals("Summer")) {
-            boolean weightVariety = !checkForWeightVariety(gifts).isEmpty();
-            System.out.println("haveWeightVariety: " + weightVariety);
+            List<Gift> perfectVariety = checkForPerfectVariety(gifts);
+            if (!perfectVariety.isEmpty()) {
+                return perfectVariety;
+            }
 
-            boolean shapeVariety = !checkForShapeVariety(gifts).isEmpty();
-            System.out.println("haveShapeVariety: " + shapeVariety);
+            List<Gift> weightVariety = checkForWeightVariety(gifts);
+            if (!weightVariety.isEmpty()) {
+                return weightVariety;
+            }
 
-            boolean perfectVariety = !checkForPerfectVariety(gifts).isEmpty();
-            System.out.println("havePerfectVariety: " + perfectVariety);
+            List<Gift> shapeVariety = checkForShapeVariety(gifts);
+            if (!shapeVariety.isEmpty()) {
+                return shapeVariety;
+            }
 
-            boolean perfectPairing = !checkForPerfectPairing(gifts).isEmpty();
-            System.out.println("havePerfectPairing: " + perfectPairing);
+            List<Gift> perfectPairing = checkForPerfectPairing(gifts);
+            if (!perfectPairing.isEmpty()) {
+                return perfectPairing;
+            }
 
-            boolean shapePairing = !perfectPairing && !checkForShapePairing(gifts).isEmpty();
-            System.out.println("haveShapePairing: " + shapePairing);
+            List<Gift> shapePairing = checkForShapePairing(gifts);
+            if (!shapePairing.isEmpty()) {
+                return shapePairing;
+            }
 
-            boolean isDiscountBasket = !perfectVariety
-                    && !perfectPairing
-                    && !weightVariety
-                    && !shapeVariety
-                    && !shapePairing;
-            System.out.println("isDiscountBasket: " + isDiscountBasket);
+            List<Gift> discountBasket = Arrays.stream(gifts).toList();
+            return discountBasket;
 
 
         } else if (season.equals("Autumn")) {
+            List<Gift> perfectVariety = checkForPerfectVariety(gifts);
+            if (!perfectVariety.isEmpty()) {
+                return perfectVariety;
+            }
+
+            List<Gift> weightVariety = checkForWeightVariety(gifts);
+            if (!weightVariety.isEmpty()) {
+                return weightVariety;
+            }
+
+            List<Gift> shapeVariety = checkForShapeVariety(gifts);
+            if (!shapeVariety.isEmpty()) {
+                return shapeVariety;
+            }
+
+            List<Gift> discountBasket = Arrays.stream(gifts).toList();
+            return discountBasket;
 
         } else if (season.equals("Winter")) {
+            List<Gift> perfectVariety = checkForPerfectVariety(gifts);
+            if (!perfectVariety.isEmpty()) {
+                return perfectVariety;
+            }
 
+            List<Gift> perfectPairing = checkForPerfectPairing(gifts);
+            if (!perfectPairing.isEmpty()) {
+                return perfectPairing;
+            }
+
+            List<Gift> discountBasket = Arrays.stream(gifts).toList();
+            return discountBasket;
         }
 
 
-
+        return null;
     }
 
     public Gift[] formatIntoGiftArray(String[] input) {
