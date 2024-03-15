@@ -38,6 +38,10 @@ public class Main {
         System.out.println("Season: " + season);
 
         List<Gift> result = checkPairings(items, season);
+
+        for (Gift gift : result) {
+            gift.print();
+        }
     }
 
     public List<Gift> checkPairings(String[] items, String season) {
