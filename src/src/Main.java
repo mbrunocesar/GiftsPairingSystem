@@ -9,7 +9,7 @@ public class Main {
         // args = "Spring 150g Square, 250g Oval, 50g Rectangle, 100g Triangle, 50g Circle, 50g Circle, 200g Rectangle".split(" ");
 
         // Have Weight Variety
-        // args = "Spring 50g Circle, 50g Square, 100g Square, 100g Square, 150g Square, 200g Square, 250g Square".split(" ");
+        args = "Spring 50g Circle, 50g Square, 100g Square, 100g Square, 150g Square, 200g Square, 250g Square".split(" ");
 
         // Have Shape Variety
         // args = "Spring 50g Square, 150g Square, 150g Circle, 150g Circle, 150g Rectangle, 150g Triangle, 150g Oval".split(" ");
@@ -144,16 +144,20 @@ public class Main {
 
     public List<Gift> checkForPerfectVariety(Gift[] gifts) {
         List<Gift> matchedItems = new LinkedList<Gift>();
-        List<String> varietiesFound = new LinkedList<String>();
 
         for (Gift gift : gifts) {
-            if (!varietiesFound.contains(gift.shape)){
-                varietiesFound.add(gift.shape);
-                matchedItems.add(gift);
+            for (Gift matched : matchedItems) {
+                if (matched.haveSameParams(gift)) {
+                    continue;
+                }
+            }
+            matchedItems.add(gift);
+            if (matchedItems.size() == 5) {
+                break;
             }
         }
 
-        if (varietiesFound.size() < 5) {
+        if (matchedItems.size() < 5) {
             matchedItems.clear();
         }
 
