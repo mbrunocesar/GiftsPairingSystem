@@ -6,22 +6,22 @@ public class Main {
 
     public static void main(String[] args) {
         // Is Perfect
-        // args = "Spring 150g Square, 250g Oval, 50g Rectangle, 100g Triangle, 50g Circle, 50g Circle, 200g Rectangle".split(" ");
+        // args = "Summer 50g Square, 100g Circle, 150g Rectangle, 200g Triangle, 250g Oval".split(" ");
 
         // Have Weight Variety
-        args = "Spring 50g Circle, 50g Square, 100g Square, 100g Square, 150g Square, 200g Square, 250g Square".split(" ");
+        // args = "Summer 50g Circle, 50g Square, 100g Square, 100g Square, 150g Square, 200g Square, 250g Square".split(" ");
 
         // Have Shape Variety
-        // args = "Spring 50g Square, 150g Square, 150g Circle, 150g Circle, 150g Rectangle, 150g Triangle, 150g Oval".split(" ");
+        // args = "Summer 50g Square, 150g Square, 150g Circle, 150g Circle, 150g Rectangle, 150g Triangle, 150g Oval".split(" ");
 
         // Have Perfect Pairing
-        // args = "Spring 50 Circle, 50g Square, 50g Square, 200g Circle, 200g Circle, 200g Square, 200g Circle".split(" ");
+        // args = "Summer 50 Circle, 50g Square, 50g Square, 200g Circle, 200g Circle, 200g Square, 200g Circle".split(" ");
 
         // Have Shape Pairing
-        // args = "Spring 100g Oval, 150g Square, 50g Square, 50g Circle, 100g Triangle, 200g Circle, 200g Circle".split(" ");
+        args = "Summer 100g Oval, 150g Square, 50g Square, 50g Circle, 100g Triangle, 200g Circle, 200g Circle".split(" ");
 
         // Is Discount Basket
-        // args = "Spring 50 Circle, 50g Square, 50g Square, 200g Circle, 200g Circle, 200g Square, 200g Square".split(" ");
+        // args = "Summer 50 Circle, 50g Square, 50g Square, 200g Circle, 200g Circle, 200g Square, 200g Square".split(" ");
 
         String seasons = args[0].equals("Spring")
                 || args[0].equals("Summer")
@@ -65,30 +65,36 @@ public class Main {
         } else if (season.equals("Summer")) {
             List<Gift> perfectVariety = checkForPerfectVariety(gifts);
             if (!perfectVariety.isEmpty()) {
+                System.out.println("perfectVariety");
                 return perfectVariety;
             }
 
             List<Gift> weightVariety = checkForWeightVariety(gifts);
             if (!weightVariety.isEmpty()) {
+                System.out.println("weightVariety");
                 return weightVariety;
             }
 
             List<Gift> shapeVariety = checkForShapeVariety(gifts);
             if (!shapeVariety.isEmpty()) {
+                System.out.println("shapeVariety");
                 return shapeVariety;
             }
 
             List<Gift> perfectPairing = checkForPerfectPairing(gifts);
             if (!perfectPairing.isEmpty()) {
+                System.out.println("perfectPairing");
                 return perfectPairing;
             }
 
             List<Gift> shapePairing = checkForShapePairing(gifts);
             if (!shapePairing.isEmpty()) {
+                System.out.println("shapePairing");
                 return shapePairing;
             }
 
             List<Gift> discountBasket = Arrays.stream(gifts).toList();
+            System.out.println("discountBasket");
             return discountBasket;
 
 
@@ -143,15 +149,28 @@ public class Main {
     }
 
     public List<Gift> checkForPerfectVariety(Gift[] gifts) {
+        List<String> matchedTypes = new LinkedList<String>();
+        List<Integer> matchedSizes = new LinkedList<Integer>();
+
         List<Gift> matchedItems = new LinkedList<Gift>();
 
         for (Gift gift : gifts) {
+            boolean skip = false;
             for (Gift matched : matchedItems) {
                 if (matched.haveSameParams(gift)) {
-                    continue;
+                    skip = true;
                 }
             }
-            matchedItems.add(gift);
+            if (skip) {
+                continue;
+            }
+
+            if (!matchedTypes.contains(gift.shape) && !matchedSizes.contains(gift.size)) {
+                matchedTypes.add(gift.shape);
+                matchedSizes.add(gift.size);
+                matchedItems.add(gift);
+            }
+
             if (matchedItems.size() == 5) {
                 break;
             }
