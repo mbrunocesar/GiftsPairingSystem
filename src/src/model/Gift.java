@@ -1,7 +1,9 @@
+package model;
+
 public class Gift {
 
-    int size;
-    String shape;
+    public int size;
+    public String shape;
 
     public Gift(int size, String shape) {
         this.size = size;
@@ -9,10 +11,10 @@ public class Gift {
     }
 
     public void print() {
-        System.out.println("Gift: " + size + " - " + shape);
+        System.out.println("model.Gift: " + size + " - " + shape);
     }
 
-    public boolean haveSameParams(Gift comparable) {
+    public boolean hasSameValues(Gift comparable) {
         return comparable.shape.equals(shape) && comparable.size == size;
     }
 
