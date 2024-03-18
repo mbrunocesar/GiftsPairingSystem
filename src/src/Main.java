@@ -1,6 +1,7 @@
 import model.Gift;
 import service.PairingService;
 import service.SeasonService;
+import service.seasons.Season;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,28 +13,28 @@ public class Main {
 
     public static void main(String[] args) {
         // Is Perfect
-        args = "Summer 50g Square, 100g Circle, 150g Rectangle, 200g Triangle, 250g Oval".split(" ");
+        args = "SUMMER 50g Square, 100g Circle, 150g Rectangle, 200g Triangle, 250g Oval".split(" ");
 
         // Have Weight Variety
-        // args = "Summer 50g Circle, 50g Square, 100g Square, 100g Square, 150g Square, 200g Square, 250g Square".split(" ");
+        // args = "SUMMER 50g Circle, 50g Square, 100g Square, 100g Square, 150g Square, 200g Square, 250g Square".split(" ");
 
         // Have Shape Variety
-        // args = "Summer 50g Square, 150g Square, 150g Circle, 150g Circle, 150g Rectangle, 150g Triangle, 150g Oval".split(" ");
+        // args = "SUMMER 50g Square, 150g Square, 150g Circle, 150g Circle, 150g Rectangle, 150g Triangle, 150g Oval".split(" ");
 
         // Have Perfect Pairing
-        // args = "Summer 50 Circle, 50g Square, 50g Square, 200g Circle, 200g Circle, 200g Square, 200g Circle".split(" ");
+        // args = "SUMMER 50 Circle, 50g Square, 50g Square, 200g Circle, 200g Circle, 200g Square, 200g Circle".split(" ");
 
         // Have Shape Pairing
-        // args = "Summer 100g Oval, 150g Square, 50g Square, 50g Circle, 100g Triangle, 200g Circle, 200g Circle".split(" ");
+        // args = "SUMMER 100g Oval, 150g Square, 50g Square, 50g Circle, 100g Triangle, 200g Circle, 200g Circle".split(" ");
 
         // Is Discount Basket
-        // args = "Summer 50 Circle, 50g Square, 50g Square, 200g Circle, 200g Circle, 200g Square, 200g Square".split(" ");
+        // args = "SUMMER 50 Circle, 50g Square, 50g Square, 200g Circle, 200g Circle, 200g Square, 200g Square".split(" ");
 
-        String seasons = args[0].equals("Spring")
-                || args[0].equals("Summer")
-                || args[0].equals("Autumn")
-                || args[0].equals("Winter")
-                ? args[0] : "Spring";
+        String seasons = args[0].equals("SPRING")
+                || args[0].equals("SUMMER")
+                || args[0].equals("AUTUMN")
+                || args[0].equals("WINTER")
+                ? args[0] : "SPRING";
 
         // removes the season from the args list
         args = Arrays.copyOfRange(args, 1, args.length);
@@ -46,7 +47,7 @@ public class Main {
 
         Gift[] gifts = formatIntoGiftArray(items);
 
-        seasonService = new SeasonService(season);
+        seasonService = new SeasonService(Season.valueOf(season));
 
         List<Gift> result = seasonService.createBasket(gifts);
 

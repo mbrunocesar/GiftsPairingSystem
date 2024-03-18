@@ -8,22 +8,22 @@ import java.util.List;
 
 public class SeasonService {
 
-    String season = "spring";
+    Season season = Season.SPRING;
     GeneralSeasonService SpecificSeasonService;
 
-    public SeasonService(String season) {
+    public SeasonService(Season season) {
         this.season = season;
 
-        if (season.equals("Spring")) {
+        if (season == Season.SPRING) {
             SpecificSeasonService = new SpringSeasonService();
 
-        } else if (season.equals("Summer")) {
+        } else if (season == Season.SUMMER) {
             SpecificSeasonService = new SummerSeasonService();
 
-        } else if (season.equals("Autumn")) {
+        } else if (season == Season.AUTUMN) {
             SpecificSeasonService = new AutumnSeasonService();
 
-        } else if (season.equals("Winter")) {
+        } else if (season == Season.WINTER) {
             SpecificSeasonService = new WinterSeasonService();
         }
     }
