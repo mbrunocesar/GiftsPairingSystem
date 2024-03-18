@@ -1,6 +1,6 @@
 package service.seasons;
 
-public enum Season {
+public enum SeasonsEnum {
     SPRING,
     SUMMER,
     AUTUMN,

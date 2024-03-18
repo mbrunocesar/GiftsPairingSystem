@@ -3,27 +3,26 @@ package service;
 import model.Gift;
 import service.seasons.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class SeasonService {
 
-    Season season = Season.SPRING;
+    SeasonsEnum season = SeasonsEnum.SPRING;
     GeneralSeasonService SpecificSeasonService;
 
-    public SeasonService(Season season) {
+    public SeasonService(SeasonsEnum season) {
         this.season = season;
 
-        if (season == Season.SPRING) {
+        if (season == SeasonsEnum.SPRING) {
             SpecificSeasonService = new SpringSeasonService();
 
-        } else if (season == Season.SUMMER) {
+        } else if (season == SeasonsEnum.SUMMER) {
             SpecificSeasonService = new SummerSeasonService();
 
-        } else if (season == Season.AUTUMN) {
+        } else if (season == SeasonsEnum.AUTUMN) {
             SpecificSeasonService = new AutumnSeasonService();
 
-        } else if (season == Season.WINTER) {
+        } else if (season == SeasonsEnum.WINTER) {
             SpecificSeasonService = new WinterSeasonService();
         }
     }

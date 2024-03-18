@@ -1,10 +1,8 @@
 import model.Gift;
-import service.PairingService;
 import service.SeasonService;
-import service.seasons.Season;
+import service.seasons.SeasonsEnum;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
@@ -46,7 +44,7 @@ public class Main {
         System.out.println("Season: " + season);
         Gift[] gifts = Helper.formatIntoGiftArray(items);
 
-        seasonService = new SeasonService(Season.valueOf(season));
+        seasonService = new SeasonService(SeasonsEnum.valueOf(season));
 
         List<Gift> result = seasonService.createBasket(gifts);
         Helper.printResult(result);
