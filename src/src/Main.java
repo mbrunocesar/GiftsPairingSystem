@@ -40,14 +40,30 @@ public class Main {
         new Main(args, seasons);
     }
 
+    public Main() {
+
+    }
+
     public Main(String[] items, String season) {
-        System.out.println("Season: " + season);
         Gift[] gifts = Helper.formatIntoGiftArray(items);
 
-        seasonService = new SeasonService(SeasonsEnum.valueOf(season));
-
-        List<Gift> result = seasonService.createBasket(gifts);
+        setSeason(season);
+        List<Gift> result = createBasket(gifts);
         Helper.printResult(result);
+    }
+
+    public void setSeason(String season) {
+        seasonService = new SeasonService(SeasonsEnum.valueOf(season));
+    }
+
+    public List<Gift> createBasket(String[] unparsedGifts) {
+        Gift[] gifts = Helper.formatIntoGiftArray(unparsedGifts);
+
+        return createBasket(gifts);
+    }
+
+    public List<Gift> createBasket(Gift[] gifts) {
+        return seasonService.createBasket(gifts);
     }
 
 }

@@ -31,4 +31,8 @@ public class SeasonService {
         return SpecificSeasonService.mountBasket(gifts);
     }
 
+    public SeasonsEnum getSeason() {
+        return season;
+    }
+
 }
