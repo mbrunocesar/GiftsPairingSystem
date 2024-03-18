@@ -1,6 +1,8 @@
 import model.Gift;
-import org.junit.Assert;
+
 import org.junit.Test;
+import service.SeasonService;
+import service.seasons.SeasonsEnum;
 
 import java.util.List;
 
@@ -8,38 +10,73 @@ import static org.junit.Assert.assertEquals;
 
 public class PairingTests {
 
-    /*
-    50g Square, 100g Circle, 150g Rectangle, 200g Triangle, 250g Oval
+    final String[] perfectVariety = {
+            "50", "Square",
+            "100", "Circle",
+            "150", "Rectangle",
+            "200", "Triangle",
+            "250", "Oval",
+            "200", "Rectangle"
+    };
+    final String[] weightVariety = {
+            "200", "Oval",
+            "50", "Square",
+            "100", "Square",
+            "150", "Square",
+            "200", "Square",
+            "250", "Square",
+            "200", "Rectangle"
+    };
+    final String[] shapeVariety = {
+            "200", "Oval",
+            "150", "Square",
+            "150", "Circle",
+            "150", "Rectangle",
+            "150", "Triangle",
+            "150", "Oval",
+            "200", "Rectangle"
+    };
+    final String[] perfectPairing = {
+            "200", "Oval",
+            "150", "Square",
+            "50", "Square",
+            "50", "Circle",
+            "200", "Circle",
+            "200", "Circle",
+            "200", "Rectangle"
+    };
+    final String[] shapePairing = {
+            "200", "Oval",
+            "50", "Square",
+            "50", "Square",
+            "200", "Circle",
+            "200", "Circle",
+            "200", "Circle",
+            "200", "Rectangle"
+    };
 
-    50g Square, 100g Square, 150g Square, 200g Square, 250g Square
-
-    150g Square, 150g Circle, 150g Rectangle, 150g Triangle, 150g Oval
-
-    50g Square, 50g Square, 200g Circle, 200g Circle, 200g Circle
-
-    150g Square, 50g Square, 50g Circle, 200g Circle, 200g Circle
-
-    150g Square, 50g Triangle, 50g Rectangle, 200g Circle, 200g Circle
-    */
     @Test
     public void TestInformedInputs() {
         String season = "SUMMER";
+        SeasonService summerService = new SeasonService(SeasonsEnum.valueOf(season));
 
+        testPerfectVariety(summerService);
+        testWeightVariety(summerService);
+        testShapeVariety(summerService);
+        testSPerfectPairing(summerService);
+        testShapePairing(summerService);
 
-        Main summerMain = new Main();
-        summerMain.setSeason(season);
-        testPerfectVariety(summerMain);
-        testWeightVariety(summerMain);
-        testShapeVariety(summerMain);
-        testSPerfectPairing(summerMain);
-        testShapePairing(summerMain);
+        assureMismatchPerfectVariety(summerService, weightVariety);
+        assureMismatchWeightVariety(summerService, weightVariety);
+        assureMismatchShapeVariety(summerService, weightVariety);
+        assureMismatchSPerfectPairing(summerService, weightVariety);
+        assureMismatchShapePairing(summerService, weightVariety);
 
         assert(true);
     }
 
-    private void testPerfectVariety(Main main) {
-        String[] args = "50g Square, 100g Circle, 150g Rectangle, 200g Triangle, 250g Oval".split(" ");
-        List<Gift> result = main.createBasket(args);
+    private void testPerfectVariety(SeasonService service) {
+        List<Gift> result = service.createBasket(Helper.formatIntoGiftArray(perfectVariety));
         assertEquals(result.get(0).size, 50);
         assertEquals(result.get(1).size, 100);
         assertEquals(result.get(2).size, 150);
@@ -53,9 +90,8 @@ public class PairingTests {
         assertEquals(result.get(4).shape, "Oval");
     }
 
-    private void testWeightVariety(Main main) {
-        String[] args = "50g Square, 100g Square, 150g Square, 200g Square, 250g Square".split(" ");
-        List<Gift> result = main.createBasket(args);
+    private void testWeightVariety(SeasonService service) {
+        List<Gift> result = service.createBasket(Helper.formatIntoGiftArray(weightVariety));
         assertEquals(result.get(0).size, 50);
         assertEquals(result.get(1).size, 100);
         assertEquals(result.get(2).size, 150);
@@ -67,9 +103,8 @@ public class PairingTests {
         }
     }
 
-    private void testShapeVariety(Main main) {
-        String[] args = "150g Square, 150g Circle, 150g Rectangle, 150g Triangle, 150g Oval".split(" ");
-        List<Gift> result = main.createBasket(args);
+    private void testShapeVariety(SeasonService service) {
+        List<Gift> result = service.createBasket(Helper.formatIntoGiftArray(shapeVariety));
         for (int i = 0; i < 5; i++) {
             assertEquals(result.get(i).size, 150);
         }
@@ -81,25 +116,8 @@ public class PairingTests {
         assertEquals(result.get(4).shape, "Oval");
     }
 
-    private void testSPerfectPairing(Main main) {
-        String[] args = "50g Square, 50g Square, 200g Circle, 200g Circle, 200g Circle".split(" ");
-        List<Gift> result = main.createBasket(args);
-        assertEquals(result.get(0).size, 50);
-        assertEquals(result.get(1).size, 50);
-        assertEquals(result.get(2).size, 200);
-        assertEquals(result.get(3).size, 200);
-        assertEquals(result.get(4).size, 200);
-
-        assertEquals(result.get(0).shape, "Square");
-        assertEquals(result.get(1).shape, "Square");
-        assertEquals(result.get(2).shape, "Circle");
-        assertEquals(result.get(3).shape, "Circle");
-        assertEquals(result.get(4).shape, "Circle");
-    }
-
-    private void testShapePairing(Main main) {
-        String[] args = "150g Square, 50g Square, 50g Circle, 200g Circle, 200g Circle".split(" ");
-        List<Gift> result = main.createBasket(args);
+    private void testShapePairing(SeasonService service) {
+        List<Gift> result = service.createBasket(Helper.formatIntoGiftArray(perfectPairing));
         assertEquals(result.get(0).size, 150);
         assertEquals(result.get(1).size, 50);
         assertEquals(result.get(2).size, 50);
@@ -113,4 +131,49 @@ public class PairingTests {
         assertEquals(result.get(4).shape, "Circle");
     }
 
+    private void testSPerfectPairing(SeasonService service) {
+        List<Gift> result = service.createBasket(Helper.formatIntoGiftArray(shapePairing));
+        assertEquals(result.get(0).size, 50);
+        assertEquals(result.get(1).size, 50);
+        assertEquals(result.get(2).size, 200);
+        assertEquals(result.get(3).size, 200);
+        assertEquals(result.get(4).size, 200);
+
+        assertEquals(result.get(0).shape, "Square");
+        assertEquals(result.get(1).shape, "Square");
+        assertEquals(result.get(2).shape, "Circle");
+        assertEquals(result.get(3).shape, "Circle");
+        assertEquals(result.get(4).shape, "Circle");
+    }
+
+    private void assureMismatchPerfectVariety(SeasonService service, String[] params) {
+        List<Gift> result = service.createBasket(Helper.formatIntoGiftArray(perfectVariety));
+        assertEquals(result.get(0).size, 50);
+        assertEquals(result.get(1).size, 100);
+        assertEquals(result.get(2).size, 150);
+        assertEquals(result.get(3).size, 200);
+        assertEquals(result.get(4).size, 250);
+
+        assertEquals(result.get(0).shape, "Square");
+        assertEquals(result.get(1).shape, "Circle");
+        assertEquals(result.get(2).shape, "Rectangle");
+        assertEquals(result.get(3).shape, "Triangle");
+        assertEquals(result.get(4).shape, "Oval");
+    }
+
+    private void assureMismatchWeightVariety(SeasonService service, String[] params) {
+
+    }
+
+    private void assureMismatchShapeVariety(SeasonService service, String[] params) {
+
+    }
+
+    private void assureMismatchSPerfectPairing(SeasonService service, String[] params) {
+
+    }
+
+    private void assureMismatchShapePairing(SeasonService service, String[] params) {
+
+    }
 }
