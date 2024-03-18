@@ -44,30 +44,12 @@ public class Main {
 
     public Main(String[] items, String season) {
         System.out.println("Season: " + season);
-
-        Gift[] gifts = formatIntoGiftArray(items);
+        Gift[] gifts = Helper.formatIntoGiftArray(items);
 
         seasonService = new SeasonService(Season.valueOf(season));
 
         List<Gift> result = seasonService.createBasket(gifts);
-
-        for (Gift gift : result) {
-            gift.print();
-        }
+        Helper.printResult(result);
     }
-
-    public Gift[] formatIntoGiftArray(String[] input) {
-        Gift[] gifts = new Gift[input.length / 2];
-
-        for (int i = 0; i < input.length; i = i + 2) {
-            int size =  Integer.parseInt(input[i].substring(0, input[i].length() - 1));
-            String shape = input[i+1].replaceAll(",", "");
-            gifts[i/2] = new Gift(size, shape);
-        }
-
-        return gifts;
-    }
-
-
 
 }
