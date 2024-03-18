@@ -1,10 +1,7 @@
 package service;
 
 import model.Gift;
-import service.pairings.PairingMatcher;
-import service.pairings.PerfectVariety;
-import service.pairings.ShapeVariety;
-import service.pairings.WeightVariety;
+import service.pairings.*;
 
 import java.util.List;
 
@@ -35,11 +32,11 @@ public class PairingService {
     }
 
     public List<Gift> matchByPerfectPairing(Gift[] gifts) {
-        return pairer.match(gifts, "PerfectPairing");
+        return pairer.match(gifts, PairingEnum.PERFECT_PAIRING);
     }
 
     public List<Gift> matchByShapePairing(Gift[] gifts) {
-        return pairer.match(gifts, "ShapePairing");
+        return pairer.match(gifts, PairingEnum.SHAPE_PAIRING);
     }
 
 }
