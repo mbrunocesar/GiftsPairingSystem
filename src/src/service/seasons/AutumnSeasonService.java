@@ -14,6 +14,6 @@ public class AutumnSeasonService extends GeneralSeasonService {
         }
 
         // if nothing else, is a discount basket
-        return Arrays.stream(gifts).toList();
+        return returnDiscountBasket(gifts);
     }
 }

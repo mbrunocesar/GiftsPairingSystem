@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Is Perfect
-        args = "SUMMER 50g Square, 100g Circle, 150g Rectangle, 200g Triangle, 250g Oval".split(" ");
+        args = "SUMMER 50g Square, 50g Circle, 100g Circle, 150g Oval, 150g Rectangle, 200g Triangle, 250g Oval".split(" ");
 
         // Have Weight Variety
         // args = "SUMMER 50g Circle, 50g Square, 100g Square, 100g Square, 150g Square, 200g Square, 250g Square".split(" ");

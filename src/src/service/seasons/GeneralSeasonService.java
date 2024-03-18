@@ -52,4 +52,9 @@ public abstract class GeneralSeasonService {
         return null;
     }
 
+    public List<Gift> returnDiscountBasket(Gift[] gifts) {
+        System.out.println("RETURNING DISCOUNT BASKET");
+        return Arrays.stream(Arrays.copyOfRange(gifts, 0, 5)).toList();
+    }
+
 }
